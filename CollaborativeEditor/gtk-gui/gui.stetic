@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stetic-interface>
+  <configuration>
+    <images-root-path>..</images-root-path>
+    <target-gtk-version>2.12</target-gtk-version>
+  </configuration>
+  <import>
+    <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <widget-library name="../bin/Debug/SteticTutorial.exe" internal="true" />
+  </import>
+  <widget class="Gtk.Window" id="MainWindow" design-size="410 300">
+    <action-group name="Default">
+      <action id="FileAction">
+        <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Alt&gt;f</property>
+        <property name="Label" translatable="yes">_File</property>
+        <property name="ShortLabel" translatable="yes">_File</property>
+      </action>
+      <action id="OpenAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Open</property>
+        <property name="ShortLabel" translatable="yes">Open</property>
+      </action>
+      <action id="OpenAction1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Open</property>
+        <property name="ShortLabel" translatable="yes">Open</property>
+        <signal name="Activated" handler="OnOpen" />
+      </action>
+      <action id="CloseAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Close</property>
+        <property name="ShortLabel" translatable="yes">Close</property>
+        <signal name="Activated" handler="OnClose" />
+      </action>
+      <action id="ExitAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Exit</property>
+        <property name="ShortLabel" translatable="yes">Exit</property>
+        <signal name="Activated" handler="OnExitActionActivated" />
+      </action>
+      <action id="SaveAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Save</property>
+        <property name="ShortLabel" translatable="yes">Save</property>
+        <signal name="Activated" handler="OnSave" />
+      </action>
+    </action-group>
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">Lets Read Crap</property>
+    <property name="Icon">stock:gtk-bold Menu</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <signal name="DeleteEvent" handler="OnDeleteEvent" />
+    <child>
+      <widget class="Gtk.VBox" id="vbox1">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.MenuBar" id="menubar1">
+            <property name="MemberName" />
+            <node name="__gtksharp_134_Stetic_Editor_ActionMenuBar" type="Menubar">
+              <node type="Menu" action="FileAction">
+                <node type="Menuitem" action="OpenAction1" />
+                <node type="Menuitem" action="CloseAction" />
+                <node type="Menuitem" action="ExitAction" />
+                <node type="Menuitem" action="SaveAction" />
+              </node>
+            </node>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="ShadowType">In</property>
+            <child>
+              <widget class="Gtk.TextView" id="logTextView">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="ShowScrollbars">True</property>
+                <property name="Text" translatable="yes" />
+                <signal name="KeyPressEvent" handler="OnKeyPress" />
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</stetic-interface>
