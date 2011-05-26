@@ -60,7 +60,7 @@ public partial class MainWindow
 		this.vbox1.Name = "vbox1";
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='OpenAction1' action='OpenAction1'/><menuitem name='CloseAction' action='CloseAction'/><menuitem name='ExitAction' action='ExitAction'/><menuitem name='SaveAction' action='SaveAction'/></menu></menubar></ui>");
+		this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='OpenAction1' action='OpenAction1'/><menuitem name='CloseAction' action='CloseAction'/><menuitem name='ExitAction' action='ExitAction'/><menuitem name='SaveAction' action='SaveAction'/></menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.vbox1.Add (this.menubar1);
@@ -86,7 +86,7 @@ public partial class MainWindow
 			this.Child.ShowAll ();
 		}
 		this.DefaultWidth = 410;
-		this.DefaultHeight = 300;
+		this.DefaultHeight = 441;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.OpenAction1.Activated += new global::System.EventHandler (this.OnOpen);

@@ -115,8 +115,8 @@ public class SyntaxTable
             while (position != -1)
             {
                 // Apply the tag to the range
-                var start = Buffer.GetIterAtOffset(position);
-                var end = Buffer.GetIterAtOffset(position + offset);
+                TextIter start = Buffer.GetIterAtOffset(position);
+                TextIter end = Buffer.GetIterAtOffset(position + offset);
                 Buffer.ApplyTag(tag, start, end);
 
                 // Get the next position of this word
@@ -129,16 +129,23 @@ public class SyntaxTable
 public partial class MainWindow : Gtk.Window
 {
     protected SyntaxTable table;
+    protected uint StatusID;
 
-	public MainWindow() : base(Gtk.WindowType.Toplevel)
+    /*-------------------------Start Up-------------------------------*/
+    
+    public MainWindow()
+        : base(Gtk.WindowType.Toplevel)
 	{
 		Build();
 
         table = SyntaxTable.LoadFromFile("highlight\\csharp.hl");
 
+        // StatusID = statusbar.GetContextId("status");
+        // statusbar.Push(StatusID, "Number of Lines: " + logTextView.Buffer.LineCount) + "    |    Current Line Number: 1");
+
         if (table == null)
         {
-            var dialog = new MessageDialog(this, DialogFlags.Modal,
+            MessageDialog dialog = new MessageDialog(this, DialogFlags.Modal,
                 MessageType.Error, ButtonsType.Close, "Could not load Syntax tables");
             dialog.Title = "Error";
 
@@ -147,6 +154,15 @@ public partial class MainWindow : Gtk.Window
         }
 
         table.SetBuffer(logTextView.Buffer);
+    }
+
+    /*---------------------------Start Up--------------------------*/
+
+    protected void UpdateStatus()
+    {
+        Gtk.TextIter iter = logTextView.Buffer.GetIterAtMark(logTextView.Buffer.InsertMark);
+//        this.statusbar.Pop(StatusID);
+//        this.statusbar.Push(statusID, "Number of Lines: " + (logTextView.Buffer.LineCount) + "    |    Current Line Number: " + (iter.Line + 1));
     }
 
 	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
@@ -165,7 +181,7 @@ public partial class MainWindow : Gtk.Window
 		 logTextView.Buffer.Text = "";
 			
 		 // Change the MainWindow Title back to the default.
-		 this.Title = "Lets Read Crap";
+		 this.Title = "Collaborative Text Editor";
 	}
 	
 	protected virtual void OnExitActionActivated(object sender, System.EventArgs e)
@@ -242,6 +258,9 @@ public partial class MainWindow : Gtk.Window
 		chooser.Destroy();
     }
 
+    /*---------------------------KEY EVENTS-----------------------------*/
+
+    // Must connect before for normal characters
     [GLib.ConnectBefore]
 	protected virtual void OnKeyPress(object o, Gtk.KeyPressEventArgs args)
 	{
@@ -256,5 +275,26 @@ public partial class MainWindow : Gtk.Window
             table.Update(0);
         }
 	}
+
+    // Must connect after for special keys
+    protected virtual void OnKeyRelease(object o, Gtk.KeyReleaseEventArgs args)
+    {
+        UpdateStatus();
+    }
+
+    // Need both of these for the click to work right. Dont know why.
+    [GLib.ConnectBefore]
+    protected virtual void OnButtonPress(object o, Gtk.ButtonPressEventArgs args)
+    {
+        UpdateStatus();
+    }
+
+    [GLib.ConnectBefore]
+    protected virtual void OnButtonRelease(object o, Gtk.ButtonReleaseEventArgs args)
+    {
+        UpdateStatus();
+    }
+
+    /*-------------------------End Key Events ----------------------------*/	
 }
 
