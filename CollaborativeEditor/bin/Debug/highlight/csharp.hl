@@ -1,0 +1,27 @@
+name = "C#"
+public = blue
+protected = blue
+private = blue
+partial = blue
+using = blue
+new = blue
+base = blue
+this = blue
+virtual = blue
+boolean = blue
+
+int = blue
+string = blue
+float = blue
+void = blue
+for = blue
+while = blue
+foreach = blue
+do = blue
+Boolean = 105,200,225
+String = 105,200,225
+Dictionary = 105,200,225
+Exception = 105,200,225
+class = purple
+object = purple
+static = purple
