@@ -41,42 +41,45 @@ public class SyntaxTable
         {
             FileStream fs = new FileStream(filename, FileMode.Open,
                                     FileAccess.Read, FileShare.Read);
-            TextReader tr = new StreamReader(fs);
+            StreamReader reader = new StreamReader(fs);
 
-            String line = tr.ReadLine();
+            String line = reader.ReadLine();
 
             // Read in lines until empty
-            while (!String.IsNullOrEmpty(line))
+            do
             {
-                // Get line to form of a=b
-                line = line.Replace(" ", "");
-                line = line.Replace("\t", "");
-                String[] split = line.Split('=');
-
-                if (split.Length != 2)
-                    return null;
-
-                // Extract the property and value
-                String property = split[0];
-                String value = split[1];
-                String lowerprop = property.ToLower();
-                String lowervalue = value.ToLower();
-
-                if (lowerprop == "name")
-                    table.Name = value;
-
-                else
+                if (!String.IsNullOrEmpty(line))
                 {
-                    if (!table.TagNameToTag.ContainsKey(lowervalue))
-                        table.AddTag(lowervalue);
-                    table.KeyToTag[property] = table.TagNameToTag[lowervalue];
+                    // Get line to form of a=b
+                    line = line.Replace(" ", "");
+                    line = line.Replace("\t", "");
+                    String[] split = line.Split('=');
+
+                    if (split.Length != 2)
+                        return null;
+
+                    // Extract the property and value
+                    String property = split[0];
+                    String value = split[1];
+                    String lowerprop = property.ToLower();
+                    String lowervalue = value.ToLower();
+
+                    if (lowerprop == "name")
+                        table.Name = value;
+
+                    else
+                    {
+                        if (!table.TagNameToTag.ContainsKey(lowervalue))
+                            table.AddTag(lowervalue);
+                        table.KeyToTag[property] = table.TagNameToTag[lowervalue];
+                    }
                 }
 
-                // Get next line
-                line = tr.ReadLine();
+                line = reader.ReadLine();
             }
+            while (!reader.EndOfStream || !String.IsNullOrEmpty(line));
 
-            tr.Close();
+            reader.Close();
         }
 
         catch (Exception)
